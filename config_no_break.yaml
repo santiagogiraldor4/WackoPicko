@@ -1,0 +1,29 @@
+# Configuración 1: Escaneo sin romper el build
+# El escáner encuentra vulnerabilidades pero NO falla
+
+namespace: WackoPicko_Scan_1
+output:
+  file_path: ./resultados_scan1.csv
+  format: CSV
+working_dir: .
+language: EN
+
+# SAST: Análisis estático de código fuente
+sast:
+  include:
+    - .
+  exclude:
+    - glob(**/node_modules/**)
+    - glob(**/.git/**)
+    - glob(**/vendor/**)
+
+# SCA: Análisis de dependencias
+sca:
+  include:
+    - .
+  exclude:
+    - glob(**/node_modules/**)
+    - glob(**/.git/**)
+
+# Configuración para NO romper: no especificamos strict mode
+# Esto permite que el escáner complete incluso si encuentra vulnerabilidades

@@ -1,0 +1,90 @@
+# Configuración 3b: Parámetros de exportación y modo de ejecución
+# Este archivo complementa el config_scan3_main.yaml
+
+# Configuración de salida detallada
+export_config:
+  # Formato de exportación
+  format: CSV
+  
+  # Campos a incluir en el reporte CSV
+  fields:
+    - vulnerability_id
+    - vulnerability_name
+    - cwe_id
+    - severity
+    - file_path
+    - line_number
+    - description
+    - remediation
+    - cvss_score
+  
+  # Delimitador CSV
+  delimiter: ","
+  
+  # Incluir encabezados
+  include_headers: true
+  
+  # Codificación del archivo
+  encoding: UTF-8
+
+# Modo de ejecución
+execution_mode:
+  # Tipo de escaneo
+  scan_type: comprehensive
+  
+  # Nivel de detalle en logs
+  log_level: INFO
+  
+  # Timeout por archivo (segundos)
+  timeout_per_file: 120
+  
+  # Número máximo de workers paralelos
+  max_workers: 4
+  
+  # Continuar en caso de errores
+  continue_on_error: false
+
+# Configuración de reportes adicionales
+additional_reports:
+  # Generar reporte HTML adicional
+  generate_html: false
+  
+  # Generar reporte JSON
+  generate_json: true
+  json_output: ./resultados_scan3_detalle.json
+  
+  # Incluir evidencias de código
+  include_code_snippets: true
+  
+  # Número de líneas de contexto
+  context_lines: 3
+
+# Filtros de vulnerabilidades
+filters:
+  # Excluir falsos positivos conocidos
+  exclude_false_positives: true
+  
+  # Severidad mínima: low, medium, high, critical
+  min_severity: low
+  
+  # Estados a incluir
+  include_status:
+    - open
+    - confirmed
+  
+  # Excluir tipos específicos (si es necesario)
+  exclude_types: []
+
+# Integración con CI/CD
+cicd_integration:
+  # Romper build en vulnerabilidades críticas
+  break_on_critical: true
+  
+  # Romper build en vulnerabilidades altas
+  break_on_high: true
+  
+  # Límite de vulnerabilidades permitidas
+  max_vulnerabilities_allowed: 0
+  
+  # Generar badge de estado
+  generate_badge: false

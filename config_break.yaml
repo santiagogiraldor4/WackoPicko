@@ -1,0 +1,32 @@
+# Configuración 2: Escaneo que ROMPE el build
+# Si encuentra vulnerabilidades, el proceso falla
+
+namespace: WackoPicko_Scan_2
+output:
+  file_path: ./resultados_scan2.csv
+  format: CSV
+working_dir: .
+language: EN
+
+# SAST: Análisis estático con modo estricto
+sast:
+  include:
+    - .
+  exclude:
+    - glob(**/node_modules/**)
+    - glob(**/.git/**)
+    - glob(**/vendor/**)
+  # Modo estricto: falla si encuentra vulnerabilidades
+  break_on_vulnerabilities: true
+
+# SCA: Análisis de dependencias con modo estricto
+sca:
+  include:
+    - .
+  exclude:
+    - glob(**/node_modules/**)
+    - glob(**/.git/**)
+  break_on_vulnerabilities: true
+
+# Esta configuración hace que el comando retorne exit code != 0 si hay vulnerabilidades
+# Útil para pipelines de CI/CD donde queremos bloquear despliegues inseguros

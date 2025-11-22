@@ -1,0 +1,49 @@
+# Configuración 3a: Escaneo completo con múltiples salidas
+# Este es el archivo principal que referencia el archivo de parámetros
+
+namespace: WackoPicko_Scan_3
+output:
+  file_path: ./resultados_scan3_completo.csv
+  format: CSV
+working_dir: .
+language: EN
+
+# SAST: Análisis estático completo
+sast:
+  include:
+    - .
+  exclude:
+    - glob(**/node_modules/**)
+    - glob(**/.git/**)
+    - glob(**/vendor/**)
+    - glob(**/.vscode/**)
+    - glob(**/__pycache__/**)
+  break_on_vulnerabilities: true
+
+# SCA: Análisis de composición de software
+sca:
+  include:
+    - .
+  exclude:
+    - glob(**/node_modules/**)
+    - glob(**/.git/**)
+  break_on_vulnerabilities: true
+
+# Configuración avanzada: incluir análisis de secretos
+checks:
+  - F001  # SQL Injection
+  - F004  # Path Traversal  
+  - F008  # XSS
+  - F011  # Command Injection
+  - F021  # Hardcoded secrets
+  - F034  # Insecure deserialization
+  - F042  # Weak cryptography
+  - F052  # Insecure file upload
+  - F063  # CSRF vulnerability
+  - F070  # Authentication bypass
+
+# Nivel de severidad mínimo para reportar
+severity_threshold: low
+
+# Generar reporte detallado
+verbose: true
